@@ -14,6 +14,11 @@ class Shop extends Model
         return $this->hasMany(Laundry::class);
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
     protected $fillable = [
         'image',
         'name',

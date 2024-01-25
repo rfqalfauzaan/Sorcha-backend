@@ -51,5 +51,11 @@ class ShopController extends Controller
                 'data' => $shops,
             ], 404);
         }
+
+        function index()
+        {
+            $shops = Shop::all(['id', 'name']); // Mengambil hanya kolom 'id' dan 'name' untuk dipilih dalam aplikasi Flutter
+            return response()->json($shops);
+        }
     }
 }

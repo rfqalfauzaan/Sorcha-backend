@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\api\LaundryController;
-use App\Http\Controllers\api\PromoController;
-use App\Http\Controllers\api\ShopController;
-use App\Http\Controllers\api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\api\ShopController;
+use App\Http\Controllers\api\UserController;
+use App\Http\Controllers\api\PromoController;
+use App\Http\Controllers\api\LaundryController;
+use App\Http\Controllers\api\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,4 +42,8 @@ Route::middleware('auth:sanctum')->group(function () {
     // Shop
     Route::get('/shop/recommendation/limit', [ShopController::class, 'readRecommendationLimit']);
     Route::get('/shop/search/city/{name}', [ShopController::class, 'searchByCity']);
+
+    Route::get('/shops', [ShopController::class, 'index']);
+
+    Route::post('/products', [ProductController::class, 'store']);
 });

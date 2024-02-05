@@ -1,12 +1,18 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
-@section('container')
-    <h1>Admin Dashboard</h1>
-    <!-- Add your admin dashboard content here -->
-    <p>Welcome to the admin dashboard!</p>
-    <ul>
-        <li>Dashboard Item 1</li>
-        <li>Dashboard Item 2</li>
-        <li>Dashboard Item 3</li>
-    </ul>
+@section('content')
+    <h1>Dashboard</h1>
+
+    <div class="row">
+        @foreach ($data as $item)
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $item['title'] }}</h5>
+                        <p class="card-text">{{ $item['value'] }}</p>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
 @endsection

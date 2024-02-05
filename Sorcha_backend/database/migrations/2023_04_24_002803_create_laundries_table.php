@@ -12,18 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('laundries', function (Blueprint $table) {
+
             $table->id();
-            $table->string('claim_code');
-            $table->bigInteger('user_id');
-            $table->bigInteger('shop_id');
+            $table->foreignId('user_id')->constrained(); // foreign key to users table
+            $table->foreignId('shop_id')->constrained(); // foreign key to shops table
             $table->double('weight');
-            $table->boolean('with_pickup');
-            $table->boolean('with_delivery');
-            $table->text('pickup_address');
-            $table->text('delivery_address');
-            $table->double('total');
-            $table->text('description');
-            $table->string('status');
+            $table->text('pickup_address')->nullable();
+            $table->text('delivery_address')->nullable();
+            $table->double('total')->nullable();
+            $table->text('description')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

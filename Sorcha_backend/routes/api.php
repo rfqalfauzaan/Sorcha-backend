@@ -1,12 +1,12 @@
 <?php
 
+use App\Http\Controllers\api\LaundryController;
+use App\Http\Controllers\api\PromoController;
+use App\Http\Controllers\api\ShopController;
+use App\Http\Controllers\api\UserController as ApiUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\api\ShopController;
 use App\Http\Controllers\api\UserController;
-use App\Http\Controllers\api\PromoController;
-use App\Http\Controllers\api\LaundryController;
-use App\Http\Controllers\api\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,10 +26,18 @@ use App\Http\Controllers\api\ProductController;
 Route::get('/promo', [PromoController::class, 'readAll']);
 Route::get('/shop', [ShopController::class, 'readAll']);
 Route::get('/laundry', [LaundryController::class, 'readAll']);
-Route::get('/user', [UserController::class, 'readAll']);
+Route::get('/user', [App\Http\Controllers\api\UserController::class, 'readAll']);
 
-Route::post('/register', [UserController::class, 'register']);
-Route::post('/login', [UserController::class, 'login']);
+Route::post('/users', [UserController::class, 'store']);
+
+// Route::post('/register', [App\Http\Controllers\api\UserController::class, 'register']);
+// Route::post('/login', [App\Http\Controllers\api\UserController::class, 'login']);
+
+Route::post('register', [App\Http\Controllers\api\UserController::class, 'registerBasicInfo']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('register/laundry-info', [App\Http\Controllers\api\UserController::class, 'registerLaundryInfo']);
+});
+Route::post('/login', [App\Http\Controllers\api\UserController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     // Laundry
@@ -43,7 +51,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/shop/recommendation/limit', [ShopController::class, 'readRecommendationLimit']);
     Route::get('/shop/search/city/{name}', [ShopController::class, 'searchByCity']);
 
-    Route::get('/shops', [ShopController::class, 'index']);
 
-    Route::post('/products', [ProductController::class, 'store']);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/laundries', [LaundryController::class, 'index']);
+        Route::get('/laundries/user/{id}', [LaundryController::class, 'show']);
+        Route::post('/laundries', [LaundryController::class, 'store']);
+        Route::put('/laundries/{id}', [LaundryController::class, 'update']);
+        Route::delete('/laundries/{id}', [LaundryController::class, 'destroy']);
+    });
 });

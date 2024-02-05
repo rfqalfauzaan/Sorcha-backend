@@ -20,7 +20,7 @@ class Laundry extends Model
     }
 
     protected $fillable = [
-        'claim_code',
+
         'user_id',
         'shop_id',
         'weight',
